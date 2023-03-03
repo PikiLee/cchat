@@ -29,7 +29,7 @@ watch(() => props.messages, () => {
 </script>
 
 <template>
-  <ul ref="wrapperEl" grid gap-3 overflow-y-auto pa-2 ma-0 items-end overflow-x-hidden>
+  <ul ref="wrapperEl" max-h-full grid gap-3 overflow-y-auto pa-2 ma-0 items-end overflow-x-hidden>
     <li v-for="m, index in messages" :key="index" :class="getClasses(m)" class="max-w-[60%]" text-left list-none p-3 rounded>
       {{ m.content }}
     </li>
