@@ -9,6 +9,7 @@ declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     ApiKeyButton: typeof import('./src/components/ApiKeyButton.vue')['default']
     ChatContainer: typeof import('./src/components/Chat/ChatContainer.vue')['default']
+    ChatMessageCard: typeof import('./src/components/Chat/ChatMessageCard.vue')['default']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElDialog: typeof import('element-plus/es')['ElDialog']
     ElInput: typeof import('element-plus/es')['ElInput']

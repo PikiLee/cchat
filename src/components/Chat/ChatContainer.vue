@@ -5,17 +5,6 @@ const props = defineProps<{
   messages: ChatCompletionRequestMessage[]
 }>()
 
-function getClasses(message: ChatCompletionRequestMessage) {
-  switch (message.role) {
-    case 'user':
-      return ['justify-self-end', 'bg-lime-400']
-    case 'assistant':
-      return ['justify-self-start', 'bg-slate-100']
-    default:
-      return []
-  }
-}
-
 // scroll
 const wrapperEl = ref<HTMLElement>()
 const { y } = useScroll(wrapperEl, { behavior: 'smooth' })
@@ -29,12 +18,7 @@ watch(() => props.messages, () => {
 </script>
 
 <template>
-  <ul ref="wrapperEl" max-h-full grid gap-3 overflow-y-auto pa-2 ma-0 items-end overflow-x-hidden>
-    <li v-for="m, index in messages" :key="index" :class="getClasses(m)" class="max-w-[60%]" text-left list-none p-3 rounded>
-      {{ m.content }}
-    </li>
+  <ul ref="wrapperEl" max-h-full grid gap-3 overflow-y-auto px-2 ma-0 items-end overflow-x-hidden>
+    <ChatMessageCard v-for="m, index in messages" :key="index" :message="m" />
   </ul>
 </template>
-
-<style scoped lang='scss'>
-</style>
