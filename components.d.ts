@@ -7,7 +7,7 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
-    ApiKeyButton: typeof import('./src/components/ApiKeyButton.vue')['default']
+    ApiKeyButton: typeof import('./src/components/Setting/SettingApiKey.vue')['default']
     ChatContainer: typeof import('./src/components/Chat/ChatContainer.vue')['default']
     ChatMessageCard: typeof import('./src/components/Chat/ChatMessageCard.vue')['default']
     ElButton: typeof import('element-plus/es')['ElButton']
@@ -17,6 +17,7 @@ declare module '@vue/runtime-core' {
     ElPopover: typeof import('element-plus/es')['ElPopover']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    SettingApiKey: typeof import('./src/components/Setting/SettingApiKey.vue')['default']
     TheCounter: typeof import('./src/components/TheCounter.vue')['default']
     TheFooter: typeof import('./src/components/TheFooter.vue')['default']
     TheHeader: typeof import('./src/components/TheHeader.vue')['default']

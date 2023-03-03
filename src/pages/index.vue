@@ -21,7 +21,7 @@ watch(error, (_error) => {
 <template>
   <div class="grid-rows-[8%_77%_15%]" grid items-center h-screen p-2>
     <TheHeader>
-      <ApiKeyButton v-model="apiKey" />
+      <SettingApiKey v-model="apiKey" />
     </TheHeader>
 
     <ChatContainer :messages="messages" self-end />
