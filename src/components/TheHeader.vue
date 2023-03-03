@@ -1,8 +1,8 @@
 <template>
-  <nav text-xl mt-6 inline-flex gap-2>
-    <button icon-btn @click="toggleDark()">
+  <nav text-xl mt-6 inline-flex justify-center items-center gap-2>
+    <el-button link @click="toggleDark()">
       <div dark:i-carbon-moon i-carbon-sun />
-    </button>
+    </el-button>
 
     <a
       icon-btn i-carbon-logo-github
@@ -11,5 +11,7 @@
       target="_blank"
       title="GitHub"
     />
+
+    <slot />
   </nav>
 </template>
