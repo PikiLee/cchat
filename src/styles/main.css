@@ -1,9 +1,16 @@
 html,
 body,
 #app {
-  height: 100%;
+  height: 100vh;
   margin: 0;
   padding: 0;
+  overflow: hidden;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
 .el-button + .el-button {

@@ -19,7 +19,7 @@ watch(error, (_error) => {
 </script>
 
 <template>
-  <div class="grid-rows-[8%_77%_15%]" grid items-center h-screen p-2>
+  <div class="grid-rows-[8%_77%_15%]" grid items-center h-full p-2 gap-2>
     <TheHeader>
       <SettingApiKey v-model="apiKey" />
       <SettingTemperature v-model="temperature" />
