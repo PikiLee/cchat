@@ -4,7 +4,7 @@ import axios from 'axios'
 export function useChat() {
   const apiKey = useStorage('api-key', '')
   const input = ref('')
-  const messages = ref<ChatCompletionRequestMessage[]>([])
+  const messages = useStorage<ChatCompletionRequestMessage[]>('messages', [])
   const loading = ref(false)
   const error = ref('')
 
