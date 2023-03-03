@@ -14,11 +14,9 @@ const temperature = useVModel(props, 'modelValue', emit)
     :popper-style="{ 'text-align': 'left', 'max-width': '90%' }"
   >
     <template #reference>
-      <div>
-        <el-button link ml-0>
-          <span i-carbon-temperature-hot text-lg />
-        </el-button>
-      </div>
+      <el-button link ml-0>
+        <span i-carbon-temperature-hot text-lg />
+      </el-button>
     </template>
     <p>
       <label for="temperature">Temperature</label>
