@@ -9,10 +9,10 @@ const apiKey = useVModel(props, 'modelValue', emit)
 
 <template>
   <el-popover
-    placement="top-end"
+    placement="bottom"
     :width="400"
     trigger="hover"
-    :popper-style="{ 'text-align': 'left' }"
+    :popper-style="{ 'text-align': 'left', 'max-width': '90%' }"
   >
     <template #reference>
       <el-button plain link>
@@ -21,8 +21,11 @@ const apiKey = useVModel(props, 'modelValue', emit)
     </template>
     <p>
       <label for="api-key">API KEY</label>
-      <el-input id="api-key" v-model="apiKey" placeholder="Please input api key." />
+      <el-input id="api-key" v-model="apiKey" placeholder="Please input api key" />
     </p>
+    <div text-center>
+      It will be stored locally and never sent to the server.
+    </div>
   </el-popover>
 </template>
 
