@@ -5,6 +5,7 @@ export function useChat() {
   const apiKey = useStorage('api-key', '')
   const input = ref('')
   const messages = useStorage<ChatCompletionRequestMessage[]>('messages', [])
+  const temperature = ref(0.6)
   const loading = ref(false)
   const error = ref('')
 
@@ -52,7 +53,7 @@ export function useChat() {
     return axios.post('https://api.openai.com/v1/chat/completions', {
       model: 'gpt-3.5-turbo',
       messages,
-      temperature: 0.6,
+      temperature: temperature.value,
     }, {
       headers: {
         'Authorization': `Bearer ${apiKey.value}`,
@@ -61,5 +62,5 @@ export function useChat() {
     })
   }
 
-  return { apiKey, input, messages, loading, error, sendMessage, clearHistory }
+  return { apiKey, input, messages, loading, error, sendMessage, temperature, clearHistory }
 }

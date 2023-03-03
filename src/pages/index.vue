@@ -6,7 +6,7 @@ defineOptions({
   name: 'IndexPage',
 })
 
-const { apiKey, input, messages, loading, error, sendMessage, clearHistory } = useChat()
+const { apiKey, input, messages, loading, error, sendMessage, temperature, clearHistory } = useChat()
 
 watch(error, (_error) => {
   if (_error) {
@@ -22,8 +22,8 @@ watch(error, (_error) => {
   <div class="grid-rows-[8%_77%_15%]" grid items-center h-screen p-2>
     <TheHeader>
       <SettingApiKey v-model="apiKey" />
+      <SettingTemperature v-model="temperature" />
     </TheHeader>
-
     <ChatContainer :messages="messages" self-end />
 
     <div grid class="grid-cols-[1fr_15%_15%]" gap-2 items-center pa-2>
