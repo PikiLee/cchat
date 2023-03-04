@@ -19,7 +19,7 @@ watch(() => props.messages, () => {
 
 <template>
   <ul ref="wrapperEl" class="wrapper" max-h-full grid gap-3 overflow-y-auto px-2 ma-0 items-end overflow-x-hidden>
-    <ChatMessageCard v-for="m, index in messages" :key="index" :message="m" />
+    <ChatMessageCard v-for="m, index in messages" :key="`${m.content.slice(0, 10)}+++${index}`" :message="m" />
   </ul>
 </template>
 
