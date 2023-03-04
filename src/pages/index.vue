@@ -1,6 +1,5 @@
 <script setup lang="ts" generic="T extends any, O extends any">
 import { ElMessage } from 'element-plus'
-import 'element-plus/theme-chalk/el-message.css'
 
 defineOptions({
   name: 'IndexPage',

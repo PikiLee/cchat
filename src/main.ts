@@ -4,6 +4,7 @@ import routes from 'virtual:generated-pages'
 import App from './App.vue'
 
 import 'uno.css'
+import 'element-plus/theme-chalk/el-message.css'
 import './styles/main.css'
 
 const app = createApp(App)
