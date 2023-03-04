@@ -21,5 +21,5 @@ useMarkdown(props.message.content, wrapperEl)
 </script>
 
 <template>
-  <li ref="wrapperEl" overflow-hidden :class="getClasses(message)" class="max-w-[60%]" break-words text-left list-none px-3 rounded />
+  <li ref="wrapperEl" overflow-hidden :class="getClasses(message)" class="max-w-[80%]" break-words text-left list-none px-3 rounded />
 </template>
