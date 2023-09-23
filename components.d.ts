@@ -16,6 +16,7 @@ declare module '@vue/runtime-core' {
     ElIntput: typeof import('element-plus/es')['ElIntput']
     ElPopover: typeof import('element-plus/es')['ElPopover']
     ElSlider: typeof import('element-plus/es')['ElSlider']
+    MessageInput: typeof import('./src/components/Chat/MessageInput.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SettingApiKey: typeof import('./src/components/Setting/SettingApiKey.vue')['default']
