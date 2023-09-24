@@ -67,7 +67,7 @@ const sendMessage = async (input: string) => {
 </script>
 
 <template>
-  <section flex flex-col gap-5>
+  <section flex flex-col gap-5 flex-wrap>
     <!-- <div>{{ history }}</div> -->
     <div text-red-4>
       {{ error }}
