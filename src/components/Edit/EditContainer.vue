@@ -52,17 +52,37 @@ useEventListener('keydown', (event: KeyboardEvent) => {
   }
 })
 
+const response = ref<string>('')
+const lastInput = ref<string>('')
 const { sendMessage: _sendMessage, loading, error } = useOpenAI()
 const sendMessage = async (input: string) => {
-  const response = await _sendMessage([
+  lastInput.value = input
+  response.value = (await _sendMessage([
     {
       role: 'user',
       content: input,
     },
-  ])
-
-  addEntryToHistory(response.content)
+  ])).content
 }
+const canConfirm = computed(() => !!response.value)
+const confirm = () => {
+  if (response.value)
+    addEntryToHistory(response.value)
+}
+const canRetry = computed(() => !!lastInput.value)
+const retry = async () => {
+  if (lastInput.value) {
+    response.value = (await _sendMessage([
+      {
+        role: 'user',
+        content: lastInput.value,
+      },
+    ])).content
+  }
+}
+
+const responseRef = ref<HTMLDivElement>()
+useMarkdown(response, responseRef)
 </script>
 
 <template>
@@ -86,8 +106,21 @@ const sendMessage = async (input: string) => {
         </el-button-group>
       </li>
       <EditButtonGroup v-for="(t, index) in templates" :key="index" :input="currentText" :disabled="!currentText" :loading="loading" :template="t" @click="sendMessage" />
+      <li>
+        <el-button-group>
+          <el-button type="primary" :disabled="!canRetry" :loading="loading" @click="retry">
+            Retry
+          </el-button>
+          <el-button type="primary" :disabled="!canConfirm" :loading="loading" @click="confirm()">
+            Confirm
+          </el-button>
+        </el-button-group>
+      </li>
     </ul>
-    <el-input :model-value="currentText" type="textarea" rows="20" @update:model-value="addEntryToHistory($event)" />
+    <section grid grid-cols-2 gap-3>
+      <el-input :model-value="currentText" type="textarea" rows="20" @update:model-value="addEntryToHistory($event)" />
+      <div ref="responseRef" border-1 border-warmGray-3 border-solid rounded-lg />
+    </section>
   </section>
 </template>
 
