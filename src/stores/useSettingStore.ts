@@ -1,21 +1,42 @@
 import { defineStore } from 'pinia'
 
+export const models = [
+  {
+    value: 'gpt-3.5-turbo',
+    label: 'GPT-3.5 Turbo',
+  },
+  {
+    value: 'gpt-3.5-turbo-16k',
+    label: 'GPT-3.5 Turbo 16K',
+  },
+  {
+    value: 'gpt-4',
+    label: 'GPT-4',
+  },
+  {
+    value: 'gpt-4-32k',
+    label: 'GPT-4 32K',
+  },
+]
+
 export const useSettingStore = defineStore('setting', () => {
-  const setting = useLocalStorage('setting', {
-    isChatMode: true,
-    temperature: 0.5,
-    apiKey: '',
-  })
+  const isChatMode = useLocalStorage('isChatMode', true)
+  const temperature = useLocalStorage('temperature', 0.5)
+  const apiKey = useLocalStorage('apiKey', '')
+  const model = useLocalStorage<'gpt-3.5-turbo' | 'gpt-3.5-turbo-16k' | 'gpt-4' | 'gpt-4-32k'>('model', 'gpt-3.5-turbo')
 
   const toggleMode = () => {
-    setting.value.isChatMode = !setting.value.isChatMode
+    isChatMode.value = !isChatMode.value
   }
 
   const isDark = useDark()
   const toggleDark = useToggle(isDark)
 
   return {
-    setting,
+    isChatMode,
+    temperature,
+    apiKey,
+    model,
     toggleMode,
     toggleDark,
   }

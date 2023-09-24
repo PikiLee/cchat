@@ -1,9 +1,14 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
-import { useSettingStore } from '~/stores/useSettingStore'
+import { models, useSettingStore } from '~/stores/useSettingStore'
 
 const settingStore = useSettingStore()
-const { setting } = storeToRefs(settingStore)
+const {
+  isChatMode,
+  temperature,
+  apiKey,
+  model,
+} = storeToRefs(settingStore)
 const { toggleMode, toggleDark } = settingStore
 </script>
 
@@ -21,11 +26,19 @@ const { toggleMode, toggleDark } = settingStore
       title="GitHub"
     />
 
-    <SettingApiKey v-model="setting.apiKey" />
-    <SettingTemperature v-model="setting.temperature" />
+    <SettingApiKey v-model="apiKey" />
+    <SettingTemperature v-model="temperature" />
     <el-button link @click="toggleMode()">
-      <div v-if="setting.isChatMode" i-carbon-chat text-lg />
+      <div v-if="isChatMode" i-carbon-chat text-lg />
       <div v-else i-carbon-book text-lg />
     </el-button>
+    <el-select v-model="model" class="m-2" placeholder="Select Model" size="large">
+      <el-option
+        v-for="item in models"
+        :key="item.value"
+        :label="item.label"
+        :value="item.value"
+      />
+    </el-select>
   </nav>
 </template>

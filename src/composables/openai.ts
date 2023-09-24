@@ -5,12 +5,12 @@ import { useSettingStore } from '~/stores/useSettingStore'
 
 export const useOpenAI = () => {
   const settingStore = useSettingStore()
-  const { setting } = storeToRefs(settingStore)
+  const { apiKey, temperature, model } = storeToRefs(settingStore)
   const loading = ref(false)
   const error = ref('')
 
   function sendMessage(messages: ChatCompletionRequestMessage[]) {
-    if (!setting.value.apiKey) {
+    if (!apiKey.value) {
       error.value = 'Please enter an API key.'
       return
     }
@@ -40,12 +40,12 @@ export const useOpenAI = () => {
 
   function doSendMessage(messages: ChatCompletionRequestMessage[]) {
     return axios.post('https://api.openai.com/v1/chat/completions', {
-      model: 'gpt-3.5-turbo',
+      model: model.value,
       messages,
-      temperature: setting.value.temperature,
+      temperature: temperature.value,
     }, {
       headers: {
-        'Authorization': `Bearer ${setting.value.apiKey}`,
+        'Authorization': `Bearer ${apiKey.value}`,
         'Content-Type': 'application/json',
       },
     })

@@ -3,7 +3,7 @@ import { storeToRefs } from 'pinia'
 import { useSettingStore } from '~/stores/useSettingStore'
 
 const settingStore = useSettingStore()
-const { setting } = storeToRefs(settingStore)
+const { isChatMode } = storeToRefs(settingStore)
 defineOptions({
   name: 'IndexPage',
 })
@@ -12,7 +12,7 @@ defineOptions({
 <template>
   <div class="grid-rows-[8%_92%]" grid items-center h-full p-4 gap-2>
     <TheHeader />
-    <ChatContainer v-if="setting.isChatMode" self-end />
+    <ChatContainer v-if="isChatMode" self-end />
     <EditContainer v-else h-full />
   </div>
 </template>
