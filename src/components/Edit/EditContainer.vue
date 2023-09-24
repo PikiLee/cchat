@@ -25,7 +25,7 @@ const addEntryToHistory = (value: string) => {
 
 const clear = () => {
   history.value = ['']
-  currentIndex.value = -1
+  currentIndex.value = 0
 }
 
 useEventListener('keydown', (event: KeyboardEvent) => {
