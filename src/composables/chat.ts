@@ -1,11 +1,13 @@
 import type { ChatCompletionRequestMessage } from 'openai'
 import axios from 'axios'
+import { storeToRefs } from 'pinia'
+import { useSettingStore } from '~/stores/useSettingStore'
 
 export function useChat() {
-  const apiKey = useStorage('api-key', '')
+  const settingStore = useSettingStore()
+  const { setting } = storeToRefs(settingStore)
   const input = ref('')
   const messages = useStorage<ChatCompletionRequestMessage[]>('messages', [])
-  const temperature = ref(0.6)
   const loading = ref(false)
   const error = ref('')
 
@@ -14,7 +16,7 @@ export function useChat() {
       error.value = 'Please enter a message.'
       return
     }
-    if (!apiKey.value) {
+    if (!setting.value.apiKey) {
       error.value = 'Please enter an API key.'
       return
     }
@@ -53,14 +55,14 @@ export function useChat() {
     return axios.post('https://api.openai.com/v1/chat/completions', {
       model: 'gpt-3.5-turbo',
       messages,
-      temperature: temperature.value,
+      temperature: setting.value.temperature,
     }, {
       headers: {
-        'Authorization': `Bearer ${apiKey.value}`,
+        'Authorization': `Bearer ${setting.value.apiKey}`,
         'Content-Type': 'application/json',
       },
     })
   }
 
-  return { apiKey, input, messages, loading, error, sendMessage, temperature, clearHistory }
+  return { apiKey: setting.value.apiKey, input, messages, loading, error, sendMessage, temperature: setting.value.temperature, clearHistory }
 }
