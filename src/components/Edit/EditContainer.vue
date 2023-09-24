@@ -117,7 +117,7 @@ useMarkdown(response, responseRef)
         </el-button-group>
       </li>
     </ul>
-    <section grid grid-cols-2 gap-3>
+    <section grid sm:grid-cols-2 gap-3>
       <el-input :model-value="currentText" type="textarea" rows="20" @update:model-value="addEntryToHistory($event)" />
       <div ref="responseRef" border-1 border-warmGray-3 border-solid rounded-lg />
     </section>

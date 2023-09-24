@@ -25,28 +25,44 @@ const md = new MarkdownIt({
   },
 })
 
+function addCopyButton(element: HTMLElement, text: string) {
+  const copyButton = document.createElement('button')
+  copyButton.classList.add('copy-button')
+  copyButton.textContent = 'Copy'
+  copyButton.addEventListener('click', () => {
+    navigator.clipboard.writeText(text)
+    ElMessage.success('Copied to clipboard')
+  })
+  element.addEventListener('mouseenter', () => {
+    copyButton.style.display = 'block'
+  })
+  element.addEventListener('mouseleave', () => {
+    copyButton.style.display = 'none'
+  })
+  element.appendChild(copyButton)
+}
+
 export function useMarkdown(str: MaybeComputedRef<string>, element: Ref<HTMLElement | undefined>) {
   const _str = resolveRef(str)
 
   const content = computed(() => md.render(_str.value))
   onMounted(() => {
-    if (!element.value)
-      console.warn('Element is undefined')
     watch(content, () => {
-      element.value!.innerHTML = content.value
-      const codeBlocks = element.value!.querySelectorAll('.hljs')
+      if (!element.value) {
+        console.warn('Element is undefined')
+        return
+      }
+      element.value.innerHTML = content.value
 
+      // add copy button to each code block
+      const codeBlocks = element.value!.querySelectorAll('.hljs')
       codeBlocks.forEach((codeBlock) => {
-        const copyButton = document.createElement('button')
-        copyButton.classList.add('copy-button')
-        copyButton.textContent = 'Copy Code'
-        copyButton.addEventListener('click', () => {
-          const codeBlockText = codeBlock.querySelector('code') ? codeBlock.querySelector('code')!.innerText : ''
-          navigator.clipboard.writeText(codeBlockText)
-          ElMessage.success('Copied to clipboard')
-        })
-        codeBlock.appendChild(copyButton)
+        addCopyButton(codeBlock as HTMLElement, codeBlock.querySelector('code') ? codeBlock.querySelector('code')!.innerText : '')
       })
+
+      // add copy button to copy the entire content
+      addCopyButton(element.value, _str.value)
+      element.value.style.position = 'relative'
     }, { immediate: true, deep: true })
   })
 }

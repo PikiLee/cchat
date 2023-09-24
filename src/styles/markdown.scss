@@ -1,24 +1,27 @@
 .hljs {
     overflow-x: auto;
     border-radius: 0.4rem;
-    padding: 1rem; 
-    position: relative;  
+    padding: 1rem;
+    position: relative;
+}
 
-    & .copy-button {
-        background: transparent;
-        color: #6b7280;
-        border-color: #6b7280;
-        border-radius: 0.2rem;
-        border-width: 1px;
-        height: max-content;
-        position: absolute;
-        right: 10px;
-        top: 10px;
-        cursor: pointer;
 
-        &:hover {
-            background-color: #e5e7eb;
-        }
-    }
+.copy-button {
+  background: #ddd;
+  color: #6b7280;
+  border-color: #6b7280;
+  border-radius: 0.2rem;
+  border-width: 1px;
+  height: max-content;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  cursor: pointer;
+  display: none;
+  padding: 0.4rem 1rem;
+
+  &:hover {
+      background-color: #e5e7eb;
+  }
 }
 
