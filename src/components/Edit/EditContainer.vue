@@ -66,12 +66,12 @@ const sendMessage = async (input: string) => {
 </script>
 
 <template>
-  <section flex flex-col gap-5 flex-wrap>
+  <section flex flex-col gap-5>
     <!-- <div>{{ history }}</div> -->
     <div text-red-4>
       {{ error }}
     </div>
-    <ul flex gap-3 items-end list-none>
+    <ul flex gap-3 items-end list-none flex-wrap>
       <li>
         <el-button-group>
           <el-button type="primary" :disabled="!canUndo" :loading="loading" @click="undo()">
