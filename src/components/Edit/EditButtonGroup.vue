@@ -15,15 +15,19 @@ defineEmits(['click'])
   <li v-if="template.type === 'group'">
     <h3>{{ template.title }}</h3>
     <el-button-group>
-      <el-button v-for="option in template.options" :key="option.title" type="primary" :disabled="disabled" :loading="loading" @click="$emit('click', template.applyTemplate(input, option.value))">
-        {{ option.title }}
-      </el-button>
+      <el-tooltip v-for="option in template.options" :key="option.title" popper-class="max-w-xs whitespace-pre-wrap" effect="light" :content="template.applyTemplate(input, option.value)">
+        <el-button type="primary" :disabled="disabled" :loading="loading" @click="$emit('click', template.applyTemplate(input, option.value))">
+          {{ option.title }}
+        </el-button>
+      </el-tooltip>
     </el-button-group>
   </li>
   <li v-else>
-    <el-button type="primary" :disabled="disabled" :loading="loading" @click="$emit('click', template.applyTemplate(input))">
-      {{ template.title }}
-    </el-button>
+    <el-tooltip popper-class="max-w-xs whitespace-pre-wrap" effect="light" :content="template.applyTemplate(input)">
+      <el-button type="primary" :disabled="disabled" :loading="loading" @click="$emit('click', template.applyTemplate(input))">
+        {{ template.title }}
+      </el-button>
+    </el-tooltip>
   </li>
 </template>
 
