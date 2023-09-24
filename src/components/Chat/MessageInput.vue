@@ -18,14 +18,16 @@ function clearHistory() {
 </script>
 
 <template>
-  <div grid class="grid-cols-[1fr_15%_15%]" gap-2 items-center pa-2>
-    <el-input v-model="input" type="textarea" autosize placeholder="Please input message." autofocus @keydown.enter.prevent="sendMessage" />
-    <el-button bg-lime-400 :loading="loading" @click="sendMessage">
-      {{ loading ? '' : 'Send' }}
-    </el-button>
-    <el-button type="danger" @click="clearHistory">
-      Clear
-    </el-button>
+  <div flex flex-col gap-2 pa-2>
+    <div flex gap-2 justify-center>
+      <el-button bg-lime-400 :loading="loading" @click="sendMessage">
+        {{ loading ? '' : 'Send' }}
+      </el-button>
+      <el-button type="danger" @click="clearHistory">
+        Clear
+      </el-button>
+    </div>
+    <el-input v-model="input" :rows="8" type="textarea" placeholder="Please input message." autofocus @keydown.enter.prevent="sendMessage" />
   </div>
 </template>
 
