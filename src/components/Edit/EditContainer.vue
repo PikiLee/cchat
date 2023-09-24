@@ -10,22 +10,21 @@ const undo = () => {
   if (canUndo.value)
     currentIndex.value--
 }
-
 const canRedo = computed(() => currentIndex.value < history.value.length - 1)
 const redo = () => {
   if (canRedo.value)
     currentIndex.value++
+}
+const canClearEditHistory = computed(() => history.value.length > 1)
+const clearEditHistory = () => {
+  history.value = ['']
+  currentIndex.value = 0
 }
 
 const addEntryToHistory = (value: string) => {
   history.value = history.value.slice(0, currentIndex.value + 1)
   history.value.push(value)
   currentIndex.value++
-}
-
-const clear = () => {
-  history.value = ['']
-  currentIndex.value = 0
 }
 
 useEventListener('keydown', (event: KeyboardEvent) => {
@@ -81,8 +80,8 @@ const sendMessage = async (input: string) => {
           <el-button type="primary" :disabled="!canRedo" :loading="loading" @click="redo()">
             Redo
           </el-button>
-          <el-button type="danger" :disabled="!currentText" :loading="loading" @click="clear()">
-            Clear
+          <el-button type="danger" :disabled="!canClearEditHistory" :loading="loading" @click="clearEditHistory()">
+            ClearEditHistory
           </el-button>
         </el-button-group>
       </li>
