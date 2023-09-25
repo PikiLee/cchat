@@ -10,9 +10,9 @@ defineOptions({
 </script>
 
 <template>
-  <div class="grid-rows-[8%_92%]" grid items-center h-full p-4 gap-2>
+  <div :class="`grid-rows-[max-content_1fr] ${isChatMode && 'h-screen overflow-y-hidden'}`" grid items-center p-4 gap-4>
     <TheHeader />
     <ChatContainer v-if="isChatMode" self-end />
-    <EditContainer v-else h-full />
+    <EditContainer v-else />
   </div>
 </template>

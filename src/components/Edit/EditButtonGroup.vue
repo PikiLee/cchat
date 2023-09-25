@@ -13,7 +13,9 @@ defineEmits(['click'])
 
 <template>
   <li v-if="template.type === 'group'">
-    <h3>{{ template.title }}</h3>
+    <h3 m-0>
+      {{ template.title }}
+    </h3>
     <el-button-group>
       <el-tooltip v-for="option in template.options" :key="option.title" popper-class="max-w-xs whitespace-pre-wrap" effect="light" :content="template.applyTemplate(input, option.value)">
         <el-button type="primary" :disabled="disabled" :loading="loading" @click="$emit('click', template.applyTemplate(input, option.value))">

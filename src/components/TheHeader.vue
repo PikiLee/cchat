@@ -13,7 +13,7 @@ const { toggleMode, toggleDark } = settingStore
 </script>
 
 <template>
-  <nav text-xl mt-6 inline-flex justify-center items-center gap-2>
+  <nav text-xl mt-6 flex flex-wrap justify-center items-center gap-2>
     <el-button link @click="toggleDark()">
       <div i-carbon-moon dark:i-carbon-sun />
     </el-button>

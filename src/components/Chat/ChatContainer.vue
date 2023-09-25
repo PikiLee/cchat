@@ -25,7 +25,7 @@ watch(() => messages, () => {
 </script>
 
 <template>
-  <section class="grid-[60%,_40%]" gap-3 h-full grid>
+  <section class="grid-rows-[1fr_max-content]" gap-3 h-full grid overflow-y-hidden>
     <ul ref="wrapperEl" class="wrapper" grid auto-rows-max gap-3 px-2 ma-0 items-end overflow-y-auto overflow-x-hidden>
       <ChatMessageCard v-for="m, index in messages" :key="`${m.content?.slice(0, 10)}+++${index}`" :message="m" />
     </ul>
