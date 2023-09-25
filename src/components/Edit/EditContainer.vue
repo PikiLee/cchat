@@ -15,16 +15,20 @@ const redo = () => {
   if (canRedo.value)
     currentIndex.value++
 }
-const canClearEditHistory = computed(() => history.value.length > 1)
-const clearEditHistory = () => {
-  history.value = ['']
-  currentIndex.value = 0
-}
 
 const addEntryToHistory = (value: string) => {
   history.value = history.value.slice(0, currentIndex.value + 1)
   history.value.push(value)
   currentIndex.value++
+
+  if (history.value.length > 100) {
+    history.value = history.value.slice(history.value.length - 100)
+    currentIndex.value = history.value.length - 1
+  }
+}
+const canClear = computed(() => currentText.value !== '')
+const clear = () => {
+  addEntryToHistory('')
 }
 
 useEventListener('keydown', (event: KeyboardEvent) => {
@@ -100,8 +104,8 @@ useMarkdown(response, responseRef)
           <el-button type="primary" :disabled="!canRedo" :loading="loading" @click="redo()">
             Redo
           </el-button>
-          <el-button type="danger" :disabled="!canClearEditHistory" :loading="loading" @click="clearEditHistory()">
-            ClearEditHistory
+          <el-button type="danger" :disabled="!canClear" :loading="loading" @click="clear()">
+            Clear
           </el-button>
         </el-button-group>
       </li>
