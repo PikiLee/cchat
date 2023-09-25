@@ -15,7 +15,7 @@ const { toggleMode, toggleDark } = settingStore
 <template>
   <nav text-xl mt-6 inline-flex justify-center items-center gap-2>
     <el-button link @click="toggleDark()">
-      <div dark:i-carbon-moon i-carbon-sun />
+      <div i-carbon-moon dark:i-carbon-sun />
     </el-button>
 
     <a
@@ -28,10 +28,12 @@ const { toggleMode, toggleDark } = settingStore
 
     <SettingApiKey v-model="apiKey" />
     <SettingTemperature v-model="temperature" />
-    <el-button link @click="toggleMode()">
-      <div v-if="isChatMode" i-carbon-chat text-lg />
-      <div v-else i-carbon-book text-lg />
-    </el-button>
+    <el-tooltip :content="isChatMode ? 'Open Edit Mode' : 'Open Chat Mode'" effect="light">
+      <el-button link @click="toggleMode()">
+        <div v-if="!isChatMode" i-carbon-chat text-lg />
+        <div v-else i-carbon-book text-lg />
+      </el-button>
+    </el-tooltip>
     <el-select v-model="model" class="m-2" placeholder="Select Model" size="large">
       <el-option
         v-for="item in models"
