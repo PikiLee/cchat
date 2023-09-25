@@ -1,8 +1,8 @@
-import type { ChatCompletionRequestMessage } from 'openai'
+import type { ChatCompletionMessageParam } from 'openai/resources/chat'
 
 export function useChat() {
   const input = ref('')
-  const messages = useStorage<ChatCompletionRequestMessage[]>('messages', [])
+  const messages = useLocalStorage<ChatCompletionMessageParam[]>('messages', [])
 
   const { sendMessage: _sendMessage, loading, error } = useOpenAI()
 
@@ -14,9 +14,16 @@ export function useChat() {
     messages.value.push({ role: 'user', content: input.value })
     input.value = ''
 
-    const response = await _sendMessage(messages.value)
+    const stream = await _sendMessage(messages.value)
 
-    messages.value.push(response)
+    if (stream) {
+      messages.value.push({
+        role: 'assistant',
+        content: '',
+      })
+      for await (const part of stream)
+        messages.value[messages.value.length - 1].content! += (part.choices[0]?.delta?.content || '')
+    }
   }
 
   function clearHistory() {

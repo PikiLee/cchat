@@ -61,12 +61,17 @@ const lastInput = ref<string>('')
 const { sendMessage: _sendMessage, loading, error } = useOpenAI()
 const sendMessage = async (input: string) => {
   lastInput.value = input
-  response.value = (await _sendMessage([
+  response.value = ''
+  const stream = await _sendMessage([
     {
       role: 'user',
       content: input,
     },
-  ])).content
+  ])
+  if (stream) {
+    for await (const part of stream)
+      response.value += (part.choices[0]?.delta?.content || '')
+  }
 }
 const canConfirm = computed(() => !!response.value)
 const confirm = () => {
@@ -76,12 +81,17 @@ const confirm = () => {
 const canRetry = computed(() => !!lastInput.value)
 const retry = async () => {
   if (lastInput.value) {
-    response.value = (await _sendMessage([
+    response.value = ''
+    const stream = await _sendMessage([
       {
         role: 'user',
         content: lastInput.value,
       },
-    ])).content
+    ])
+    if (stream) {
+      for await (const part of stream)
+        response.value += (part.choices[0]?.delta?.content || '')
+    }
   }
 }
 

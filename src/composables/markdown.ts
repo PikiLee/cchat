@@ -1,8 +1,7 @@
 import MarkdownIt from 'markdown-it'
 import hljs from 'highlight.js'
 import 'highlight.js/styles/github.css'
-import type { MaybeComputedRef } from '@vueuse/core'
-import type { Ref } from 'vue'
+import type { ComputedRef, Ref } from 'vue'
 import { ElMessage } from 'element-plus'
 import '~/styles/markdown.scss'
 
@@ -42,10 +41,8 @@ function addCopyButton(element: HTMLElement, text: string) {
   element.appendChild(copyButton)
 }
 
-export function useMarkdown(str: MaybeComputedRef<string>, element: Ref<HTMLElement | undefined>) {
-  const _str = resolveRef(str)
-
-  const content = computed(() => md.render(_str.value))
+export function useMarkdown(str: Ref<string> | ComputedRef<string>, element: Ref<HTMLElement | undefined>) {
+  const content = computed(() => md.render(str.value))
   onMounted(() => {
     watch(content, () => {
       if (!element.value) {
@@ -61,7 +58,7 @@ export function useMarkdown(str: MaybeComputedRef<string>, element: Ref<HTMLElem
       })
 
       // add copy button to copy the entire content
-      addCopyButton(element.value, _str.value)
+      addCopyButton(element.value, str.value)
       element.value.style.position = 'relative'
     }, { immediate: true, deep: true })
   })

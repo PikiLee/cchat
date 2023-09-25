@@ -1,11 +1,11 @@
 <script setup lang='ts'>
-import type { ChatCompletionRequestMessage } from 'openai'
+import type { ChatCompletionMessageParam } from 'openai/resources/chat'
 import { useMarkdown } from '~/composables/markdown'
 const props = defineProps<{
-  message: ChatCompletionRequestMessage
+  message: ChatCompletionMessageParam
 }>()
 
-function getClasses(message: ChatCompletionRequestMessage) {
+function getClasses(message: ChatCompletionMessageParam) {
   switch (message.role) {
     case 'user':
       return ['justify-self-end', 'bg-lime-400']
@@ -17,7 +17,8 @@ function getClasses(message: ChatCompletionRequestMessage) {
 }
 
 const wrapperEl = ref<HTMLElement>()
-useMarkdown(props.message.content, wrapperEl)
+const content = computed(() => props.message.content || '')
+useMarkdown(content, wrapperEl)
 </script>
 
 <template>

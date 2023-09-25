@@ -1,5 +1,5 @@
-import axios from 'axios'
-import type { ChatCompletionRequestMessage } from 'openai'
+import OpenAI from 'openai'
+import type { ChatCompletionMessageParam } from 'openai/resources/chat'
 import { storeToRefs } from 'pinia'
 import { useSettingStore } from '~/stores/useSettingStore'
 
@@ -9,7 +9,7 @@ export const useOpenAI = () => {
   const loading = ref(false)
   const error = ref('')
 
-  function sendMessage(messages: ChatCompletionRequestMessage[]) {
+  async function sendMessage(messages: ChatCompletionMessageParam[]) {
     if (!apiKey.value) {
       error.value = 'Please enter an API key.'
       return
@@ -20,35 +20,28 @@ export const useOpenAI = () => {
     loading.value = true
     error.value = ''
 
-    return doSendMessage(messages)
-      .then((res) => {
-        if (res.data.choices.length === 0 || !res.data.choices[0].message)
-          throw new Error('No response from OpenAI')
-        return res.data.choices[0].message
+    try {
+      const openai = new OpenAI({
+        apiKey: apiKey.value,
+        dangerouslyAllowBrowser: true,
       })
-      .catch((err) => {
-        if (err.response.status === 401)
-          error.value = 'Invalid API key. Please check your API key and try again.'
-        else
-          error.value = err.message
-        console.error(err)
-      })
-      .finally(() => {
-        loading.value = false
-      })
-  }
 
-  function doSendMessage(messages: ChatCompletionRequestMessage[]) {
-    return axios.post('https://api.openai.com/v1/chat/completions', {
-      model: model.value,
-      messages,
-      temperature: temperature.value,
-    }, {
-      headers: {
-        'Authorization': `Bearer ${apiKey.value}`,
-        'Content-Type': 'application/json',
-      },
-    })
+      const stream = await openai.chat.completions.create({
+        messages,
+        model: model.value,
+        temperature: temperature.value,
+        stream: true,
+      })
+
+      return stream
+    }
+    catch (err) {
+      error.value = JSON.stringify(err)
+      console.error(err)
+    }
+    finally {
+      loading.value = false
+    }
   }
 
   return {
