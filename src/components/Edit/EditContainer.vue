@@ -56,12 +56,23 @@ useEventListener('keydown', (event: KeyboardEvent) => {
   }
 })
 
-const response = ref<string>('')
+const responseHistory = useLocalStorage<string[]>('responseHistory', [''])
+const responseCurrentIndex = useLocalStorage('responseCurrentIndex', 0)
+const response = computed({
+  get() {
+    return responseHistory.value[responseCurrentIndex.value]
+  },
+  set(value) {
+    responseHistory.value[responseCurrentIndex.value] = value
+  },
+})
+
 const lastInput = ref<string>('')
 const { sendMessage: _sendMessage, loading, error } = useOpenAI()
 const sendMessage = async (input: string) => {
   lastInput.value = input
-  response.value = ''
+  responseHistory.value.push('')
+  responseCurrentIndex.value++
   const stream = await _sendMessage([
     {
       role: 'user',
@@ -81,7 +92,8 @@ const confirm = () => {
 const canRetry = computed(() => !!lastInput.value)
 const retry = async () => {
   if (lastInput.value) {
-    response.value = ''
+    responseHistory.value.push('')
+    responseCurrentIndex.value++
     const stream = await _sendMessage([
       {
         role: 'user',
@@ -95,6 +107,16 @@ const retry = async () => {
   }
 }
 
+const canGoToPreviousResponse = computed(() => responseCurrentIndex.value > 0)
+const canGoToNextResponse = computed(() => responseCurrentIndex.value < responseHistory.value.length - 1)
+const goToPreviousResponse = () => {
+  if (canGoToPreviousResponse.value)
+    responseCurrentIndex.value--
+}
+const goToNextResponse = () => {
+  if (canGoToNextResponse.value)
+    responseCurrentIndex.value++
+}
 const responseRef = ref<HTMLDivElement>()
 useMarkdown(response, responseRef)
 </script>
@@ -127,6 +149,16 @@ useMarkdown(response, responseRef)
           </el-button>
           <el-button type="primary" :disabled="!canConfirm" :loading="loading" @click="confirm()">
             Confirm
+          </el-button>
+        </el-button-group>
+      </li>
+      <li>
+        <el-button-group>
+          <el-button type="primary" :disabled="!canGoToPreviousResponse" :loading="loading" @click="goToPreviousResponse">
+            Previous Response
+          </el-button>
+          <el-button type="primary" :disabled="!goToNextResponse" :loading="loading" @click="goToNextResponse()">
+            Next Response
           </el-button>
         </el-button-group>
       </li>
