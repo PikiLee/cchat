@@ -2,12 +2,10 @@ import type { Template } from './type'
 
 const applyTemplate = (input: string, tone: string) => {
   return `Your task is to perform the following actions:
-1 - Find the paragraph delimited by """.
+1 - Find the paragraph delimited by <<<
 2 - Rewrite it with the ${tone} tone.
 
-"""
-${input}
-"""
+<<<${input}<<<
 `
 }
 

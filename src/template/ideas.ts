@@ -2,7 +2,7 @@ import type { Template } from './type'
 
 const applyTemplate = (input: string) => {
   return `Your task is to perform the following actions:
-  1 - Answer the following text delimited by """.
+  1 - Answer the following text delimited by <<<.
   2 - Come up with at least three methods.
   3 - Explain the reason why this method would work.
   4 - List pros and cons for each method.
@@ -29,9 +29,7 @@ const applyTemplate = (input: string) => {
   # Best Method: <Best Method>
   # Reason
   <Reason>
-  """
-  ${input}
-  """
+  <<<${input}<<<
 `
 }
 

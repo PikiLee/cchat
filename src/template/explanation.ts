@@ -2,7 +2,7 @@ import type { Template } from './type'
 
 const applyTemplate = (input: string) => {
   return `Your task is to perform the following actions:
-  1 - Find the phrase delimited by """.
+  1 - Find the phrase delimited by <<<.
   2 - Come up with at least two possible explanation in digital commerce.
   3 - Choose the right explanation.
   4 - Give a reason
@@ -18,7 +18,7 @@ const applyTemplate = (input: string) => {
   <Right Explanation>
   # Reason
   <Reason>
-  """${input}"""
+  <<<${input}<<<
 `
 }
 
