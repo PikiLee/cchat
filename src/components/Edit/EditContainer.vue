@@ -165,9 +165,16 @@ useMarkdown(response, responseRef)
     </ul>
     <section grid sm:grid-cols-2 gap-3>
       <div order-2 sm:order-1>
-        <el-input text-lg :model-value="currentText" type="textarea" rows="15" @update:model-value="addEntryToHistory($event)" />
+        <el-input
+          text-lg px-4 :input-style="{
+            backgroundColor: '#f5f5f7',
+            borderWidth: '0px',
+            borderRadius: '0.5rem',
+            outlineColor: 'black',
+          }" :model-value="currentText" type="textarea" rows="15" @update:model-value="addEntryToHistory($event)"
+        />
       </div>
-      <div ref="responseRef" order-1 sm:order-2 border-1 border-warmGray-3 border-solid rounded-lg text-left pa-4 />
+      <div ref="responseRef" class="bg-[#f5f5f7]" order-1 sm:order-2 rounded-lg text-left px-4 />
     </section>
   </section>
 </template>
