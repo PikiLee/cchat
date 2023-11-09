@@ -17,6 +17,10 @@ export const models = [
     value: 'gpt-4-32k',
     label: 'GPT-4 32K',
   },
+  {
+    value: 'gpt-4-1106-preview',
+    label: 'GPT-4 Turbo',
+  },
 ]
 
 export const useSettingStore = defineStore('setting', () => {
