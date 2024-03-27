@@ -18,7 +18,7 @@ export const models = [
     label: 'GPT-4 32K',
   },
   {
-    value: 'gpt-4-1106-preview',
+    value: 'gpt-4-turbo-preview',
     label: 'GPT-4 Turbo',
   },
 ]
