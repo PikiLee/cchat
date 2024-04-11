@@ -6,19 +6,11 @@ export const models = [
     label: 'GPT-3.5 Turbo',
   },
   {
-    value: 'gpt-3.5-turbo-16k',
-    label: 'GPT-3.5 Turbo 16K',
-  },
-  {
-    value: 'gpt-4',
+    value: 'gpt-4-vision-preview',
     label: 'GPT-4',
   },
   {
-    value: 'gpt-4-32k',
-    label: 'GPT-4 32K',
-  },
-  {
-    value: 'gpt-4-turbo-preview',
+    value: 'gpt-4-turbo',
     label: 'GPT-4 Turbo',
   },
 ]
