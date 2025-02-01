@@ -27,8 +27,12 @@ export const models: { value: ChatModel; label: string }[] = [
     label: 'o1-mini',
   },
   {
-    value: 'o1-preview',
-    label: 'o1-preview',
+    value: 'o1',
+    label: 'o1',
+  },
+  {
+    value: 'o3-mini',
+    label: 'o3-mini',
   },
 ]
 
